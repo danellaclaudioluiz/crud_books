@@ -19,8 +19,6 @@ const Books = () => {
     fetchAllBooks();
   }, []);
 
-  console.log(books);
-
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8800/books/${id}`);
@@ -32,7 +30,7 @@ const Books = () => {
 
   return (
     <div>
-      <h1>Lama Book Shop</h1>
+      <h1>Book Shop</h1>
       <div className="books">
         {books.map((book) => (
           <div key={book.id} className="book">

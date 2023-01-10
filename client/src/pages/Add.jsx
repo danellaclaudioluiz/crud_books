@@ -20,6 +20,7 @@ const Add = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    console.log(book);
     try {
       await axios.post("http://localhost:8800/books", book);
       navigate("/");
