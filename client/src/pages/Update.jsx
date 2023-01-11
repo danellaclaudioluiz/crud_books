@@ -27,7 +27,7 @@ const Update = () => {
   useEffect(() => {
       const fetchOneBook = async () => {
         try {
-          const res = await axios.get(`http://localhost:8800/books/${bookId}`);
+          const res = await axios.get(`https://crudbooks.herokuapp.com/books/${bookId}`);
           setValues({
             title: res.data[0].title || "",
             desc: res.data[0].desc || "",
@@ -55,7 +55,7 @@ const Update = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/books/${bookId}`, book);
+      await axios.put(`https://crudbooks.herokuapp.com/books/${bookId}`, book);
       console.log(book);
       navigate("/");
     } catch (err) {

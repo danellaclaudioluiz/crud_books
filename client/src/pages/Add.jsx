@@ -22,7 +22,7 @@ const Add = () => {
     e.preventDefault();
     console.log(book);
     try {
-      await axios.post("http://localhost:8800/books", book);
+      await axios.post("https://crudbooks.herokuapp.com/books", book);
       navigate("/");
     } catch (err) {
       console.log(err);

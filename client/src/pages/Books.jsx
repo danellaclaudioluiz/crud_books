@@ -11,7 +11,7 @@ const Books = () => {
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/books");
+        const res = await axios.get("https://crudbooks.herokuapp.com/books");
         setBooks(res.data);
         console.log(res.data);
       } catch (err) {
@@ -23,7 +23,7 @@ const Books = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/books/${id}`);
+      await axios.delete(`https://crudbooks.herokuapp.com/books/${id}`);
       window.location.reload()
     } catch (err) {
       console.log(err);
@@ -36,7 +36,7 @@ const Books = () => {
       <div className="books">
         {books.map((book) => (
           <div key={book.id} className="book">
-            <img src={book.cover.includes(".") ? book.cover : NoImg || NoImg} alt="" />
+            <img src={book.cover && book.cover.includes(".") ? book.cover : NoImg || NoImg} alt="" />
             <h2>{book.title}</h2>
             <p>{book.desc}</p>
             <span>${book.price}</span>

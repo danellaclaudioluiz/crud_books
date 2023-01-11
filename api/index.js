@@ -4,10 +4,10 @@ const app = express();
 import cors from "cors";
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root1234",
-    database: "test",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 })
 
 // pra utilizar json no body
@@ -37,6 +37,7 @@ app.get("/books", (req, res) => {
 })
 
 app.post("/books", (req, res) => {
+    
     const q = "INSERT INTO books (`title`, `desc`, `price`, `cover`) VALUES (?)";
     const values = [
         req.body.title,
@@ -80,6 +81,6 @@ app.put("/books/:id", (req, res) => {
     })
 })
 
-app.listen(8800, () => {
+app.listen(process.env.PORT, () => {
     console.log('connected to backend');
 })
