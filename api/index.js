@@ -18,6 +18,16 @@ app.get("/", (req, res) => {
     res.json("hello, this is the home")
 })
 
+app.get("/books/:id", (req, res) => {
+    const q = "SELECT * FROM books WHERE id = ?";
+    const bookId = req.params.id;
+
+    db.query(q, [bookId], (err, data) => {
+        if (err) return res.json(err)
+        return res.json(data);
+    })
+})
+
 app.get("/books", (req, res) => {
     const q = "SELECT * FROM books";
     db.query(q, (err, data) => {
@@ -37,7 +47,7 @@ app.post("/books", (req, res) => {
 
     db.query(q, [values], (err, data) => {
         if (err) return res.json(err)
-        return res.json("Book has been created");
+        return res.json("Book has created successfully.");
     })
 })
 
@@ -48,7 +58,25 @@ app.delete("/books/:id", (req, res) => {
 
     db.query(q, [bookId], (err, data) => {
         if (err) return res.json(err)
-        return res.json(`Book id: ${bookId} has been deleted.`);
+        return res.json(`Book id: ${bookId} has deleted successfully.`);
+    })
+})
+
+app.put("/books/:id", (req, res) => {
+    const bookId = req.params.id;
+    const values = [
+        req.body.title,
+        req.body.desc,
+        req.body.price,
+        req.body.cover,
+    ];
+    
+    const q = "UPDATE books SET `title` = ?, `desc` = ?, `price` = ?, `cover` = ? WHERE id = ?";
+
+    console.log(values);
+    db.query(q, [...values, bookId], (err, data) => {
+        if (err) return res.json(err)
+        return res.json(`Book id: ${bookId} has updated successfully.`);
     })
 })
 

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import NoImg from "../images/no-img.png";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -12,6 +13,7 @@ const Books = () => {
       try {
         const res = await axios.get("http://localhost:8800/books");
         setBooks(res.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -29,24 +31,26 @@ const Books = () => {
   };
 
   return (
-    <div>
+    <>
       <h1>Book Shop</h1>
       <div className="books">
         {books.map((book) => (
           <div key={book.id} className="book">
-            <img src={book.cover} alt="" />
+            <img src={book.cover.includes(".") ? book.cover : NoImg || NoImg} alt="" />
             <h2>{book.title}</h2>
             <p>{book.desc}</p>
             <span>${book.price}</span>
-            <button className="delete" onClick={() => handleDelete(book.id)}>Delete</button>
-            <button className="update">
-              <Link
-                to={`/update/${book.id}`}
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                Update
-              </Link>
-            </button>
+            <div className="buttons">
+              <button className="delete" onClick={() => handleDelete(book.id)}>Delete</button>
+              <button className="update">
+                <Link
+                  to={`/update/${book.id}`}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  Update
+                </Link>
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -56,7 +60,7 @@ const Books = () => {
           Add new book
         </Link>
       </button>
-    </div>
+    </>
   );
 };
 
